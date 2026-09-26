@@ -2,8 +2,7 @@ export const EVENT = {
   brand: 'The New Church',
   name: 'NXTCON26',
   theme: 'Knight and Bishop',
-  /** As set on the event artwork. */
-  themeDisplay: 'NIGHT AND BISHOP',
+  themeDisplay: 'KNIGHT AND BISHOP',
   dateLabel: 'October 1, 2026',
   dateShort: 'October 1',
   timeLabel: '9:00 AM WAT',

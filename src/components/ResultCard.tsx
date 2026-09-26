@@ -70,7 +70,7 @@ export function ResultCard({ piece, className }: ResultCardProps) {
         </div>
 
         <p className="font-display text-[0.68rem] uppercase tracking-[0.28em] text-ivory">
-          {EVENT.themeDisplay}
+          KNIGHT AND BISHOP
         </p>
         <p className="mt-1.5 font-sans text-[0.44rem] font-medium uppercase tracking-mega text-ivory-500">
           {EVENT.dateShort} &middot; {EVENT.timeShort}

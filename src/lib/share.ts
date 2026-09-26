@@ -31,6 +31,11 @@ export function buildWhatsAppUrl(text: string): string {
   return `https://wa.me/?text=${encodeURIComponent(text)}`;
 }
 
+/** Opens Instagram. The app cannot receive a prefilled caption from the web. */
+export function openInstagram(): void {
+  window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+}
+
 export type ShareOutcome = 'shared' | 'copied' | 'dismissed' | 'failed';
 
 interface NativeShareInput {

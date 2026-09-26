@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { EVENT } from '../data/event';
-import { PIECES } from '../data/pieces';
 import { renderResultCard } from '../lib/renderCard';
 import {
   buildFullShareText,
@@ -8,11 +7,12 @@ import {
   buildWhatsAppUrl,
   copyText,
   downloadBlob,
+  openInstagram,
   shareNatively,
 } from '../lib/share';
 import type { PieceId } from '../types';
 
-export type ShareAction = 'share' | 'whatsapp' | 'copy' | 'download' | 'invite';
+export type ShareAction = 'whatsapp' | 'instagram' | 'copy' | 'download' | 'invite';
 
 /**
  * All of the sharing behaviour for a result, with transient status messages.
@@ -39,26 +39,23 @@ export function useShare(piece: PieceId) {
   const { text, url } = buildFullShareText(piece);
   const fullMessage = `${text}\n\n${url}`;
 
-  const share = useCallback(async () => {
-    setBusy('share');
-    const file = await renderResultCard(piece)
-      .then((blob) =>
-        blob ? new File([blob], `nxtcon26-${piece}.png`, { type: 'image/png' }) : null,
-      )
-      .catch(() => null);
-
-    const outcome = await shareNatively({
-      title: `${EVENT.name} — I am a ${PIECES[piece].name}`,
-      text,
-      url,
-      file,
-    });
-    setBusy(null);
-
-    if (outcome === 'shared') flash('share', 'Shared');
-    else if (outcome === 'copied') flash('share', 'Message copied');
-    else if (outcome === 'failed') flash('share', 'Could not share — try WhatsApp');
-  }, [flash, piece, text, url]);
+  const instagram = useCallback(async () => {
+    setBusy('instagram');
+    const copied = await copyText(fullMessage);
+    try {
+      const blob = await renderResultCard(piece);
+      if (blob) downloadBlob(blob, `nxtcon26-${piece}-card.png`);
+    } catch {
+      // Caption still copies; the card can be saved separately.
+    } finally {
+      setBusy(null);
+    }
+    openInstagram();
+    flash(
+      'instagram',
+      copied ? 'Caption copied · card saved' : 'Open Instagram and post your card',
+    );
+  }, [flash, fullMessage, piece]);
 
   const whatsapp = useCallback(() => {
     window.open(buildWhatsAppUrl(fullMessage), '_blank', 'noopener,noreferrer');
@@ -106,5 +103,5 @@ export function useShare(piece: PieceId) {
     window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer');
   }, [flash, url]);
 
-  return { busy, status, share, whatsapp, copy, download, invite, message: fullMessage };
+  return { busy, status, instagram, whatsapp, copy, download, invite, message: fullMessage };
 }

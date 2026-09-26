@@ -244,7 +244,7 @@ export async function renderResultCard(pieceId: PieceId): Promise<Blob | null> {
   // Event footer
   ctx.fillStyle = IVORY;
   ctx.font = `500 34px ${DISPLAY}`;
-  trackedText(ctx, EVENT.themeDisplay, W / 2, 1196, 9);
+  trackedText(ctx, 'KNIGHT AND BISHOP', W / 2, 1196, 9);
 
   ctx.fillStyle = MUTED;
   ctx.font = `500 21px ${SANS}`;

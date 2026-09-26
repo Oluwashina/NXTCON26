@@ -6,17 +6,17 @@ import { buildCalendarFile, downloadBlob } from '../lib/share';
 import { cn } from '../lib/cn';
 import type { PieceId } from '../types';
 import { Button } from './ui/Button';
-import { CalendarIcon, PinIcon, ShareIcon, UsersIcon } from './ui/icons';
+import { CalendarIcon, InstagramIcon, PinIcon, UsersIcon } from './ui/icons';
 
 interface EventCTAProps {
   piece: PieceId;
   className?: string;
 }
 
-/** The three closing actions, with event details expanding in place. */
+/** Closing actions, with event details expanding in place. */
 export function EventCTA({ piece, className }: EventCTAProps) {
   const [open, setOpen] = useState(false);
-  const { busy, status, share, invite } = useShare(piece);
+  const { busy, status, instagram, invite } = useShare(piece);
 
   return (
     <div className={cn('w-full', className)}>
@@ -39,11 +39,11 @@ export function EventCTA({ piece, className }: EventCTAProps) {
           variant="outline"
           size="md"
           fullWidth
-          onClick={share}
-          disabled={busy === 'share'}
-          icon={<ShareIcon />}
+          onClick={instagram}
+          disabled={busy === 'instagram'}
+          icon={<InstagramIcon />}
         >
-          {busy === 'share' ? 'Preparing…' : 'Share my result'}
+          {busy === 'instagram' ? 'Preparing…' : 'Instagram'}
         </Button>
       </div>
 

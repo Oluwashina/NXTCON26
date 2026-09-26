@@ -2,7 +2,7 @@ import { useShare } from '../hooks/useShare';
 import { cn } from '../lib/cn';
 import type { PieceId } from '../types';
 import { Button } from './ui/Button';
-import { CopyIcon, DownloadIcon, ShareIcon, WhatsAppIcon } from './ui/icons';
+import { CopyIcon, DownloadIcon, InstagramIcon, WhatsAppIcon } from './ui/icons';
 
 interface ShareButtonsProps {
   piece: PieceId;
@@ -10,25 +10,24 @@ interface ShareButtonsProps {
 }
 
 export function ShareButtons({ piece, className }: ShareButtonsProps) {
-  const { busy, status, share, whatsapp, copy, download } = useShare(piece);
+  const { busy, status, whatsapp, instagram, copy, download } = useShare(piece);
 
   return (
     <div className={cn('w-full', className)}>
       <div className="grid grid-cols-2 gap-2.5">
-        <Button
-          variant="gold"
-          size="md"
-          fullWidth
-          onClick={share}
-          disabled={busy === 'share'}
-          icon={<ShareIcon />}
-          className="col-span-2"
-        >
-          {busy === 'share' ? 'Preparing…' : 'Share my result'}
-        </Button>
-
         <Button variant="outline" size="md" fullWidth onClick={whatsapp} icon={<WhatsAppIcon />}>
           WhatsApp
+        </Button>
+
+        <Button
+          variant="outline"
+          size="md"
+          fullWidth
+          onClick={instagram}
+          disabled={busy === 'instagram'}
+          icon={<InstagramIcon />}
+        >
+          {busy === 'instagram' ? 'Preparing…' : 'Instagram'}
         </Button>
 
         <Button variant="outline" size="md" fullWidth onClick={copy} icon={<CopyIcon />}>
@@ -42,9 +41,8 @@ export function ShareButtons({ piece, className }: ShareButtonsProps) {
           onClick={download}
           disabled={busy === 'download'}
           icon={<DownloadIcon />}
-          className="col-span-2"
         >
-          {busy === 'download' ? 'Rendering card…' : 'Save result card'}
+          {busy === 'download' ? 'Rendering…' : 'Save result card'}
         </Button>
       </div>
 
