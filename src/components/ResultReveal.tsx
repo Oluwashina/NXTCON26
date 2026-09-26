@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { PIECES } from '../data/pieces';
 import { cn } from '../lib/cn';
+import { revealLeadIn } from '../lib/personalize';
 import type { PieceId } from '../types';
 import { ChessBoard, type Placement } from './ChessBoard';
 import { ChessPiece } from './ChessPiece';
@@ -47,12 +48,18 @@ const CALCULATING_MS = 3600;
 
 interface ResultRevealProps {
   piece: PieceId;
+  playerName?: string;
   /** Jump straight to the revealed state — used for ?piece= deep links. */
   instant?: boolean;
   onRevealed?: () => void;
 }
 
-export function ResultReveal({ piece, instant = false, onRevealed }: ResultRevealProps) {
+export function ResultReveal({
+  piece,
+  playerName = '',
+  instant = false,
+  onRevealed,
+}: ResultRevealProps) {
   const [revealed, setRevealed] = useState(instant);
   const [frame, setFrame] = useState(0);
   const notified = useRef(instant);
@@ -108,14 +115,14 @@ export function ResultReveal({ piece, instant = false, onRevealed }: ResultRevea
             </motion.div>
 
             <div className="mt-11 text-center">
-              <p className="eyebrow text-ivory/70">
+              <p className="eyebrow text-ink/55">
                 Calculating your move
                 <Ellipsis />
               </p>
-              <p className="mt-4 font-editorial text-sm italic text-ivory/30">
+              <p className="mt-4 font-editorial text-sm italic text-ink/45">
                 Seven moves. Six pieces. One of them is you.
               </p>
-              <p className="eyebrow mt-6 text-ivory/25">Tap to reveal</p>
+              <p className="eyebrow mt-6 text-ink/40">Tap to reveal</p>
             </div>
           </motion.div>
         ) : (
@@ -148,9 +155,9 @@ export function ResultReveal({ piece, instant = false, onRevealed }: ResultRevea
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.75, duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-              className="eyebrow mt-10 text-ivory/45"
+              className="eyebrow mt-10 text-ink/55"
             >
-              You are the
+              {revealLeadIn(playerName)}
             </motion.p>
 
             <span className="mt-1 block overflow-hidden">

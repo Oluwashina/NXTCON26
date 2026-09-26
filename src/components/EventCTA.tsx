@@ -10,13 +10,14 @@ import { CalendarIcon, InstagramIcon, PinIcon, UsersIcon } from './ui/icons';
 
 interface EventCTAProps {
   piece: PieceId;
+  playerName?: string;
   className?: string;
 }
 
 /** Closing actions, with event details expanding in place. */
-export function EventCTA({ piece, className }: EventCTAProps) {
+export function EventCTA({ piece, playerName = '', className }: EventCTAProps) {
   const [open, setOpen] = useState(false);
-  const { busy, status, instagram, invite } = useShare(piece);
+  const { busy, status, instagram, invite } = useShare(piece, playerName);
 
   return (
     <div className={cn('w-full', className)}>
@@ -108,8 +109,8 @@ export function EventCTA({ piece, className }: EventCTAProps) {
 function Detail({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid gap-1.5 sm:grid-cols-[7rem_1fr] sm:gap-4">
-      <dt className="eyebrow pt-[0.2rem] text-ivory/30">{label}</dt>
-      <dd className="font-sans text-[0.82rem] font-light leading-relaxed text-ivory-200">
+      <dt className="eyebrow pt-[0.2rem]">{label}</dt>
+      <dd className="font-sans text-[0.82rem] font-light leading-relaxed text-ink-700">
         {children}
       </dd>
     </div>

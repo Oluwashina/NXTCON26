@@ -5,6 +5,7 @@ import { Backdrop } from './components/ui/Backdrop';
 import { BoardScreen } from './screens/BoardScreen';
 import { EventScreen } from './screens/EventScreen';
 import { IntroScreen } from './screens/IntroScreen';
+import { NameScreen } from './screens/NameScreen';
 import { QuizScreen } from './screens/QuizScreen';
 import { ReflectionScreen } from './screens/ReflectionScreen';
 import { RevealScreen } from './screens/RevealScreen';
@@ -12,10 +13,11 @@ import { emptyAnswerSheet, isComplete, scoreQuiz } from './lib/scoring';
 import { readPieceFromUrl, syncPieceToUrl } from './lib/url';
 import type { AnswerSheet, PieceId, ScoreResult } from './types';
 
-type Stage = 'intro' | 'board' | 'quiz' | 'reveal' | 'reflection' | 'event';
+type Stage = 'intro' | 'name' | 'board' | 'quiz' | 'reveal' | 'reflection' | 'event';
 
 const BACKDROP: Record<Stage, 'hall' | 'void' | 'chamber'> = {
   intro: 'void',
+  name: 'void',
   board: 'chamber',
   quiz: 'void',
   reveal: 'chamber',
@@ -31,6 +33,7 @@ export default function App() {
   const [score, setScore] = useState<ScoreResult | null>(null);
   const [sharedPiece, setSharedPiece] = useState<PieceId | null>(deepLinked);
   const [reflection, setReflection] = useState('');
+  const [playerName, setPlayerName] = useState('');
 
   const piece = score?.winner ?? sharedPiece;
 
@@ -54,7 +57,7 @@ export default function App() {
     setAnswers(finalSheet);
     setScore(result);
     setSharedPiece(null);
-    syncPieceToUrl(result.winner);
+    syncPieceToUrl(null);
     setStage('reveal');
   }, [answers]);
 
@@ -72,6 +75,7 @@ export default function App() {
     setScore(null);
     setSharedPiece(null);
     setReflection('');
+    setPlayerName('');
     syncPieceToUrl(null);
     setStage('intro');
   }, []);
@@ -84,14 +88,24 @@ export default function App() {
       <main className="relative">
         <AnimatePresence mode="sync">
           {stage === 'intro' ? (
-            <IntroScreen key="intro" onBegin={() => setStage('board')} />
+            <IntroScreen key="intro" onBegin={() => setStage('name')} />
+          ) : null}
+
+          {stage === 'name' ? (
+            <NameScreen
+              key="name"
+              value={playerName}
+              onChange={setPlayerName}
+              onContinue={() => setStage('board')}
+              onBack={() => setStage('intro')}
+            />
           ) : null}
 
           {stage === 'board' ? (
             <BoardScreen
               key="board"
               onBegin={() => setStage('quiz')}
-              onBack={() => setStage('intro')}
+              onBack={() => setStage('name')}
             />
           ) : null}
 
@@ -109,6 +123,7 @@ export default function App() {
             <RevealScreen
               key="reveal"
               piece={piece}
+              playerName={playerName}
               score={score}
               instant={score === null}
               onContinue={() => setStage('reflection')}
@@ -120,6 +135,7 @@ export default function App() {
             <ReflectionScreen
               key="reflection"
               piece={piece}
+              playerName={playerName}
               value={reflection}
               onChange={setReflection}
               onContinue={() => setStage('event')}
@@ -131,6 +147,7 @@ export default function App() {
             <EventScreen
               key="event"
               piece={piece}
+              playerName={playerName}
               onRestart={handleRestart}
               onBack={() => setStage('reflection')}
             />

@@ -6,11 +6,12 @@ import { CopyIcon, DownloadIcon, InstagramIcon, WhatsAppIcon } from './ui/icons'
 
 interface ShareButtonsProps {
   piece: PieceId;
+  playerName?: string;
   className?: string;
 }
 
-export function ShareButtons({ piece, className }: ShareButtonsProps) {
-  const { busy, status, whatsapp, instagram, copy, download } = useShare(piece);
+export function ShareButtons({ piece, playerName = '', className }: ShareButtonsProps) {
+  const { busy, status, whatsapp, instagram, copy, download } = useShare(piece, playerName);
 
   return (
     <div className={cn('w-full', className)}>

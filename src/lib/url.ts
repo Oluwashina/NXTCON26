@@ -11,13 +11,12 @@ export function readPieceFromUrl(): PieceId | null {
   return raw.toLowerCase() as PieceId;
 }
 
-/** Absolute, shareable link for a result. Nothing is stored remotely. */
-export function buildShareUrl(piece: PieceId): string {
-  if (typeof window === 'undefined') return `?${PARAM}=${piece}`;
+/** Link to the experience entry — no query params, so recipients start fresh. */
+export function buildShareUrl(): string {
+  if (typeof window === 'undefined') return '/';
   const url = new URL(window.location.href);
   url.hash = '';
   url.search = '';
-  url.searchParams.set(PARAM, piece);
   return url.toString();
 }
 

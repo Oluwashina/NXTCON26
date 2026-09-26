@@ -53,7 +53,7 @@ export function ChessBoard({
       <div
         className={cn(
           'relative h-full w-full overflow-hidden',
-          'shadow-[0_40px_120px_-40px_rgba(0,0,0,0.95),0_0_0_1px_rgba(242,239,231,0.14)]',
+          'shadow-[0_40px_120px_-40px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.08)]',
           perspective &&
             'transition-transform duration-[1400ms] ease-cinema [transform:rotateX(11deg)_scale(0.98)]',
         )}
@@ -167,7 +167,7 @@ export function ChessBoard({
         <>
           <div
             aria-hidden
-            className="pointer-events-none absolute -bottom-6 left-0 right-0 grid grid-cols-8 text-center font-sans text-[0.55rem] uppercase tracking-widest text-ivory/25"
+            className="pointer-events-none absolute -bottom-6 left-0 right-0 grid grid-cols-8 text-center font-sans text-[0.55rem] uppercase tracking-widest text-ink/35"
           >
             {FILES.map((file) => (
               <span key={file}>{file}</span>
@@ -175,7 +175,7 @@ export function ChessBoard({
           </div>
           <div
             aria-hidden
-            className="pointer-events-none absolute -left-5 bottom-0 top-0 grid grid-rows-8 items-center font-sans text-[0.55rem] tracking-widest text-ivory/25"
+            className="pointer-events-none absolute -left-5 bottom-0 top-0 grid grid-rows-8 items-center font-sans text-[0.55rem] tracking-widest text-ink/35"
           >
             {RANKS.map((rank) => (
               <span key={rank}>{rank}</span>

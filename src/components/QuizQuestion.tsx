@@ -26,7 +26,7 @@ export function QuizQuestion({
     >
       <p className="eyebrow text-gold/70">{question.context}</p>
 
-      <h2 className="display mt-4 text-balance text-[clamp(1.5rem,6.4vw,2.6rem)] font-normal normal-case text-ivory sm:mt-5">
+      <h2 className="display mt-4 text-balance text-[clamp(1.5rem,6.4vw,2.6rem)] font-normal normal-case text-ink-800 sm:mt-5">
         {question.prompt}
       </h2>
 

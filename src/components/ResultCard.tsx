@@ -1,5 +1,6 @@
 import { EVENT } from '../data/event';
 import { PIECES } from '../data/pieces';
+import { cardIsA } from '../lib/personalize';
 import { cn } from '../lib/cn';
 import type { PieceId } from '../types';
 import { ChessPiece } from './ChessPiece';
@@ -7,18 +8,19 @@ import { NxtconLockup } from './ui/Brand';
 
 interface ResultCardProps {
   piece: PieceId;
+  playerName?: string;
   className?: string;
 }
 
 /** The on-screen twin of the downloadable PNG. Fixed 4:5, built to be screenshot. */
-export function ResultCard({ piece, className }: ResultCardProps) {
+export function ResultCard({ piece, playerName = '', className }: ResultCardProps) {
   const data = PIECES[piece];
 
   return (
     <figure
       className={cn(
         'relative mx-auto aspect-[4/5] w-full max-w-[22rem] overflow-hidden',
-        'marble grain',
+        'result-card-dark grain',
         'shadow-[0_50px_120px_-50px_rgba(0,0,0,1)]',
         className,
       )}
@@ -53,7 +55,7 @@ export function ResultCard({ piece, className }: ResultCardProps) {
           </div>
 
           <p className="mt-4 font-sans text-[0.46rem] font-medium uppercase tracking-mega text-ivory-500">
-            I am a
+            {cardIsA(playerName)}
           </p>
           <p className="display ivory-text -mt-0.5 text-[2.9rem] font-medium leading-none xs:text-[3.3rem]">
             {data.name}
@@ -77,7 +79,7 @@ export function ResultCard({ piece, className }: ResultCardProps) {
         </p>
       </div>
       <figcaption className="sr-only">
-        {`${EVENT.name} result card — I am a ${data.name}, ${data.title}.`}
+        {`${EVENT.name} result card — ${cardIsA(playerName)} ${data.name}, ${data.title}.`}
       </figcaption>
     </figure>
   );

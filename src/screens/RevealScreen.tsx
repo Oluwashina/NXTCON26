@@ -13,6 +13,7 @@ import type { PieceId, ScoreResult } from '../types';
 
 interface RevealScreenProps {
   piece: PieceId;
+  playerName?: string;
   /** Absent for shared links, where only the piece is known. */
   score?: ScoreResult | null;
   /** Skips the calculating sequence (deep-linked results). */
@@ -23,6 +24,7 @@ interface RevealScreenProps {
 
 export function RevealScreen({
   piece,
+  playerName = '',
   score = null,
   instant = false,
   onContinue,
@@ -34,14 +36,19 @@ export function RevealScreen({
 
   return (
     <Screen center={false} className="justify-center py-14">
-      <ResultReveal piece={piece} instant={instant} onRevealed={() => setRevealed(true)} />
+      <ResultReveal
+        piece={piece}
+        playerName={playerName}
+        instant={instant}
+        onRevealed={() => setRevealed(true)}
+      />
 
       <AnimatePresence>
         {revealed ? (
           <div key="body">
             {/* Strength / Move */}
             <Reveal delay={beat(2.0)} className="mt-12 sm:mt-14">
-              <dl className="grid grid-cols-2 divide-x divide-ivory/10 border-y border-ivory/10">
+              <dl className="grid grid-cols-2 divide-x divide-ink/10 border-y border-ink/10">
                 <Stat label="Strength" value={data.strength} />
                 <Stat label="Your move" value={data.move} accent />
               </dl>
@@ -55,8 +62,8 @@ export function RevealScreen({
                   className={cn(
                     'text-pretty',
                     index === 0
-                      ? 'font-editorial text-[1.3rem] italic leading-snug text-ivory sm:text-[1.6rem]'
-                      : 'font-sans text-[0.88rem] font-light leading-relaxed text-ivory-300 sm:text-[0.95rem]',
+                      ? 'font-editorial text-[1.3rem] italic leading-snug text-ink-800 sm:text-[1.6rem]'
+                      : 'font-sans text-[0.88rem] font-light leading-relaxed text-ink-600 sm:text-[0.95rem]',
                     index === data.description.length - 1 &&
                       'font-sans text-[0.62rem] font-medium uppercase not-italic tracking-mega text-gold/80 sm:text-[0.68rem]',
                   )}
@@ -79,10 +86,10 @@ export function RevealScreen({
                 <div className="mx-auto mt-6 h-px w-10 hairline" />
               </div>
               <div className="mt-8">
-                <ResultCard piece={piece} />
+                <ResultCard piece={piece} playerName={playerName} />
               </div>
               <div className="mx-auto mt-8 max-w-sm">
-                <ShareButtons piece={piece} />
+                <ShareButtons piece={piece} playerName={playerName} />
               </div>
             </Reveal>
 
@@ -114,11 +121,11 @@ function Stat({
 }) {
   return (
     <div className="px-4 py-5 text-center sm:px-6 sm:py-6">
-      <dt className="eyebrow text-ivory/35">{label}</dt>
+      <dt className="eyebrow">{label}</dt>
       <dd
         className={cn(
           'mt-2.5 font-display text-[1.05rem] uppercase leading-tight tracking-[0.1em] sm:text-[1.25rem]',
-          accent ? 'gold-text' : 'text-ivory',
+          accent ? 'gold-text' : 'text-ink-800',
         )}
       >
         {value}
@@ -145,21 +152,21 @@ function BoardReadout({ score }: { score: ScoreResult }) {
               <span
                 className={cn(
                   'w-[5.5rem] shrink-0 font-sans text-[0.58rem] font-medium uppercase tracking-widest',
-                  index === 0 ? 'text-gold-light' : 'text-ivory/45',
+                  index === 0 ? 'text-gold-deep' : 'text-ink/50',
                 )}
               >
                 {PIECES[id].name}
               </span>
-              <span className="relative h-px flex-1 bg-ivory/10">
+              <span className="relative h-px flex-1 bg-ink/10">
                 <span
                   className={cn(
                     'absolute inset-y-0 left-0 block transition-[width] duration-[1400ms] ease-cinema',
-                    index === 0 ? 'bg-gold' : 'bg-ivory/45',
+                    index === 0 ? 'bg-gold' : 'bg-ink/35',
                   )}
                   style={{ width: `${(value / max) * 100}%` }}
                 />
               </span>
-              <span className="w-6 shrink-0 text-right font-display text-[0.75rem] text-ivory/40">
+              <span className="w-6 shrink-0 text-right font-display text-[0.75rem] text-ink/50">
                 {value}
               </span>
             </li>
@@ -168,7 +175,7 @@ function BoardReadout({ score }: { score: ScoreResult }) {
       </ul>
 
       {score.wasTie ? (
-        <p className="eyebrow mt-6 text-center text-ivory/25">
+        <p className="eyebrow mt-6 text-center text-ink/45">
           Tie resolved by your final move
         </p>
       ) : null}

@@ -155,7 +155,7 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
         </Button>
       </div>
 
-      <p className="relative z-10 eyebrow mt-7 hidden text-ivory/20 sm:block">
+      <p className="relative z-10 eyebrow mt-7 hidden text-ink/35 sm:block">
         Tip — press A to F to make your move
       </p>
     </Screen>

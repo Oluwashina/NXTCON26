@@ -24,7 +24,7 @@ export function QuizProgress({
   return (
     <div className={cn('flex items-center gap-5', className)}>
       <p className="flex shrink-0 items-baseline gap-2 font-sans uppercase">
-        <span className="text-[0.55rem] font-medium tracking-mega text-ivory/40">Move</span>
+        <span className="text-[0.55rem] font-medium tracking-mega text-ink/45">Move</span>
         <span className="relative inline-flex items-baseline">
           <motion.span
             key={current}
@@ -35,7 +35,7 @@ export function QuizProgress({
           >
             {pad(current)}
           </motion.span>
-          <span className="ml-1.5 font-display text-[0.8rem] leading-none text-ivory/35">
+          <span className="ml-1.5 font-display text-[0.8rem] leading-none text-ink/40">
             / {pad(total)}
           </span>
         </span>
@@ -66,8 +66,8 @@ export function QuizProgress({
                   isCurrent
                     ? 'h-[2px] bg-gold'
                     : isAnswered
-                      ? 'h-px bg-ivory/55 group-hover:bg-gold-light'
-                      : 'h-px bg-ivory/15',
+                      ? 'h-px bg-ink/35 group-hover:bg-gold'
+                      : 'h-px bg-ink/12',
                 )}
               />
             </button>

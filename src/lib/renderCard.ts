@@ -1,5 +1,6 @@
 import { EVENT } from '../data/event';
 import { PIECES } from '../data/pieces';
+import { cardIsA } from './personalize';
 import { PIECE_PATHS, PIECE_VIEWBOX } from '../data/pieceArt';
 import type { PieceId } from '../types';
 
@@ -184,7 +185,10 @@ async function ensureFonts(): Promise<void> {
 }
 
 /** Renders the shareable result card to a PNG blob. Entirely client-side. */
-export async function renderResultCard(pieceId: PieceId): Promise<Blob | null> {
+export async function renderResultCard(
+  pieceId: PieceId,
+  playerName = '',
+): Promise<Blob | null> {
   await ensureFonts();
 
   const canvas = document.createElement('canvas');
@@ -220,7 +224,7 @@ export async function renderResultCard(pieceId: PieceId): Promise<Blob | null> {
   // Result
   ctx.fillStyle = MUTED;
   ctx.font = `500 22px ${SANS}`;
-  trackedText(ctx, 'I AM A', W / 2, 752, 12);
+  trackedText(ctx, cardIsA(playerName), W / 2, 752, 12);
 
   ctx.fillStyle = IVORY;
   ctx.font = `500 152px ${DISPLAY}`;

@@ -6,12 +6,12 @@ type Size = 'sm' | 'md' | 'lg';
 
 const VARIANTS: Record<Variant, string> = {
   solid:
-    'bg-ivory text-ink border border-ivory hover:bg-white hover:border-white shadow-[0_18px_50px_-24px_rgba(242,239,231,0.7)]',
+    'bg-ink text-ivory border border-ink hover:bg-ink-700 hover:border-ink-700 shadow-[0_18px_50px_-24px_rgba(0,0,0,0.35)]',
   gold:
-    'border border-gold/70 bg-gradient-to-b from-gold-light/95 to-gold text-ink hover:from-white hover:to-gold-light shadow-[0_18px_50px_-24px_rgba(198,161,91,0.9)]',
+    'border border-gold/70 bg-gradient-to-b from-gold-light/95 to-gold text-ink hover:from-white hover:to-gold-light shadow-[0_18px_50px_-24px_rgba(198,161,91,0.45)]',
   outline:
-    'border border-ivory/25 text-ivory hover:border-gold/70 hover:text-gold-light bg-ivory/[0.03] hover:bg-ivory/[0.07]',
-  quiet: 'border border-transparent text-ivory-400 hover:text-ivory',
+    'border border-ink/18 text-ink-800 hover:border-gold/70 hover:text-gold-deep bg-white/60 hover:bg-white shadow-[0_8px_30px_-20px_rgba(0,0,0,0.12)]',
+  quiet: 'border border-transparent text-ink-500 hover:text-ink',
 };
 
 const SIZES: Record<Size, string> = {

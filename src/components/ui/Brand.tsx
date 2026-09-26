@@ -12,13 +12,13 @@ export function BrandMark({
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
       <img
-        src="/brand/the-new-icon-white.png"
+        src="/brand/the-new-icon-gold.png"
         alt=""
         aria-hidden
         className="h-6 w-6 object-contain opacity-85 sm:h-7 sm:w-7"
       />
       {showWordmark ? (
-        <span className="font-sans text-[0.54rem] font-medium uppercase leading-tight tracking-mega text-ivory/70">
+        <span className="font-sans text-[0.54rem] font-medium uppercase leading-tight tracking-mega text-ink-600">
           The
           <br />
           New

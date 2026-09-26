@@ -23,13 +23,14 @@ Every person has a different role, perspective and way of moving. The experience
 ## How it plays
 
 1. **Intro** — A dark, hall-like opening. Event details stay hidden on purpose.
-2. **The board** — An interactive chessboard. Each piece moves differently.
-3. **Seven moves** — One scenario at a time. Same questions, same order, every time.
-4. **Reveal** — A short “calculating your move” beat, then the piece.
-5. **Reflection** — “What move have you been postponing?” Typed locally. Never saved.
-6. **Invitation** — NXTCON26 details, countdown, and ways to invite or share.
+2. **Your name** — First name only, stored in the browser for this session. Used on the result and share card.
+3. **The board** — An interactive chessboard. Each piece moves differently.
+4. **Seven moves** — One scenario at a time. Same questions, same order, every time.
+5. **Reveal** — A short “calculating your move” beat, then the piece (personalized when a name was given).
+6. **Reflection** — “What move have you been postponing?” Typed locally. Never saved.
+7. **Invitation** — NXTCON26 details, countdown, and ways to invite or share.
 
-Results can be shared on WhatsApp or Instagram, copied as text, or saved as a card. A link like `?piece=knight` opens that result directly — nothing is stored on a server.
+Results can be shared on WhatsApp or Instagram, copied as text, or saved as a card. Shared links point to the main experience (no result in the URL) so friends can discover their own piece. Nothing is stored on a server.
 
 ## How scoring works
 

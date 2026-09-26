@@ -5,10 +5,12 @@ import { Button } from '../components/ui/Button';
 import { LineReveal, Reveal } from '../components/ui/Reveal';
 import { Screen } from '../components/ui/Screen';
 import { PIECES } from '../data/pieces';
+import { displayFirstName } from '../lib/playerName';
 import type { PieceId } from '../types';
 
 interface ReflectionScreenProps {
   piece: PieceId;
+  playerName?: string;
   value: string;
   onChange: (value: string) => void;
   onContinue: () => void;
@@ -19,6 +21,7 @@ const LIMIT = 220;
 
 export function ReflectionScreen({
   piece,
+  playerName = '',
   value,
   onChange,
   onContinue,
@@ -26,6 +29,7 @@ export function ReflectionScreen({
 }: ReflectionScreenProps) {
   const field = useRef<HTMLTextAreaElement>(null);
   const data = PIECES[piece];
+  const first = displayFirstName(playerName);
   const hasAnswer = value.trim().length > 0;
 
   return (
@@ -49,20 +53,22 @@ export function ReflectionScreen({
         />
 
         <Reveal delay={0.9} className="mt-8 max-w-lg">
-          <p className="font-sans text-[0.86rem] font-light leading-relaxed text-ivory-400">
-            The {data.name.toLowerCase()} is only powerful when it moves. Yours included.
+          <p className="font-sans text-[0.86rem] font-light leading-relaxed text-ink-500">
+            {first
+              ? `${first}, the ${data.name.toLowerCase()} is only powerful when it moves. Yours included.`
+              : `The ${data.name.toLowerCase()} is only powerful when it moves. Yours included.`}
           </p>
         </Reveal>
 
         <Reveal delay={1.1} className="mt-12">
-          <h2 className="font-editorial text-[clamp(1.5rem,6.5vw,2.4rem)] italic leading-tight text-ivory">
+          <h2 className="font-editorial text-[clamp(1.5rem,6.5vw,2.4rem)] italic leading-tight text-ink-800">
             What move have you been postponing?
           </h2>
         </Reveal>
 
         <Reveal delay={1.3} className="mt-7">
           <div
-            className="group relative border border-ivory/12 bg-ivory/[0.02] transition-colors duration-500 focus-within:border-gold/60 hover:border-ivory/25"
+            className="group relative border border-ink/12 bg-white/90 transition-colors duration-500 focus-within:border-gold/60 hover:border-ink/20 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.15)]"
             onClick={() => field.current?.focus()}
           >
             <span
@@ -77,11 +83,11 @@ export function ReflectionScreen({
               rows={4}
               placeholder="Write it here. Only you will see it."
               aria-label="What move have you been postponing?"
-              className="w-full resize-none bg-transparent px-5 py-5 font-editorial text-[1.1rem] italic leading-relaxed text-ivory outline-none placeholder:text-ivory/25 sm:px-7 sm:py-6 sm:text-[1.25rem]"
+              className="w-full resize-none bg-transparent px-5 py-5 font-editorial text-[1.1rem] italic leading-relaxed text-ink outline-none placeholder:text-ink/30 sm:px-7 sm:py-6 sm:text-[1.25rem]"
             />
-            <div className="flex items-center justify-between border-t border-ivory/10 px-5 py-3 sm:px-7">
-              <p className="eyebrow text-ivory/25">Never saved · never sent</p>
-              <p className="font-display text-[0.7rem] text-ivory/30">
+            <div className="flex items-center justify-between border-t border-ink/10 px-5 py-3 sm:px-7">
+              <p className="eyebrow text-ink/40">Never saved · never sent</p>
+              <p className="font-display text-[0.7rem] text-ink/45">
                 {value.length}/{LIMIT}
               </p>
             </div>

@@ -47,7 +47,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
               perspective
               showCoordinates
             />
-            <p className="eyebrow mt-9 text-center text-ivory/30 lg:mt-10">
+            <p className="eyebrow mt-9 text-center text-ink/45 lg:mt-10">
               Touch a piece to watch it move
             </p>
           </div>
@@ -101,19 +101,19 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
                     <span
                       className={cn(
                         'h-px shrink-0 transition-all duration-500 ease-cinema',
-                        isActive ? 'w-8 bg-gold' : 'w-3 bg-ivory/30',
+                        isActive ? 'w-8 bg-gold' : 'w-3 bg-ink/20',
                       )}
                     />
                     <span className="font-sans text-[0.78rem] font-light leading-relaxed sm:text-[0.86rem]">
                       <span
                         className={cn(
                           'font-medium uppercase tracking-widest transition-colors duration-500',
-                          isActive ? 'text-gold-light' : 'text-ivory',
+                          isActive ? 'text-gold-deep' : 'text-ink-800',
                         )}
                       >
                         The {piece.name}
                       </span>
-                      <span className="text-ivory-400"> {piece.movement}.</span>
+                      <span className="text-ink-500"> {piece.movement}.</span>
                     </span>
                   </button>
                 </Reveal>

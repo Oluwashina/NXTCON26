@@ -34,7 +34,7 @@ export function QuizOption({
           'select-none touch-manipulation transition-all duration-500 ease-cinema sm:gap-5 sm:px-6 sm:py-[1.15rem]',
           selected
             ? 'border-gold/70 bg-gold/[0.09] shadow-[inset_0_0_40px_-18px_rgba(228,199,140,0.45)]'
-            : 'border-ivory/12 bg-ivory/[0.02] hover:border-ivory/35 hover:bg-ivory/[0.055]',
+            : 'border-ink/12 bg-white/80 hover:border-ink/25 hover:bg-white shadow-[0_8px_28px_-22px_rgba(0,0,0,0.12)]',
           dimmed && !selected && 'opacity-45',
         )}
       >
@@ -50,7 +50,7 @@ export function QuizOption({
         <span
           className={cn(
             'mt-[0.1rem] shrink-0 font-display text-[0.92rem] font-medium leading-none transition-colors duration-500',
-            selected ? 'text-gold-light' : 'text-ivory/35 group-hover:text-ivory/70',
+            selected ? 'text-gold-deep' : 'text-ink/35 group-hover:text-ink/60',
           )}
         >
           {label}
@@ -59,7 +59,7 @@ export function QuizOption({
         <span
           className={cn(
             'font-sans text-[0.86rem] font-light leading-snug transition-colors duration-500 sm:text-[0.95rem]',
-            selected ? 'text-ivory' : 'text-ivory-300 group-hover:text-ivory',
+            selected ? 'text-ink' : 'text-ink-600 group-hover:text-ink-800',
           )}
         >
           {text}

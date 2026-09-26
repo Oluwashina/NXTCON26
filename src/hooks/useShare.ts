@@ -18,7 +18,7 @@ export type ShareAction = 'whatsapp' | 'instagram' | 'copy' | 'download' | 'invi
  * All of the sharing behaviour for a result, with transient status messages.
  * No network calls: the card is rendered locally and handed to the platform.
  */
-export function useShare(piece: PieceId) {
+export function useShare(piece: PieceId, playerName = '') {
   const [busy, setBusy] = useState<ShareAction | null>(null);
   const [status, setStatus] = useState<{ action: ShareAction; message: string } | null>(null);
   const timer = useRef<number | null>(null);
@@ -36,14 +36,14 @@ export function useShare(piece: PieceId) {
     timer.current = window.setTimeout(() => setStatus(null), 2600);
   }, []);
 
-  const { text, url } = buildFullShareText(piece);
+  const { text, url } = buildFullShareText(piece, playerName);
   const fullMessage = `${text}\n\n${url}`;
 
   const instagram = useCallback(async () => {
     setBusy('instagram');
     const copied = await copyText(fullMessage);
     try {
-      const blob = await renderResultCard(piece);
+      const blob = await renderResultCard(piece, playerName);
       if (blob) downloadBlob(blob, `nxtcon26-${piece}-card.png`);
     } catch {
       // Caption still copies; the card can be saved separately.
@@ -55,7 +55,7 @@ export function useShare(piece: PieceId) {
       'instagram',
       copied ? 'Caption copied · card saved' : 'Open Instagram and post your card',
     );
-  }, [flash, fullMessage, piece]);
+  }, [flash, fullMessage, piece, playerName]);
 
   const whatsapp = useCallback(() => {
     window.open(buildWhatsAppUrl(fullMessage), '_blank', 'noopener,noreferrer');
@@ -69,7 +69,7 @@ export function useShare(piece: PieceId) {
   const download = useCallback(async () => {
     setBusy('download');
     try {
-      const blob = await renderResultCard(piece);
+      const blob = await renderResultCard(piece, playerName);
       if (blob) {
         downloadBlob(blob, `nxtcon26-${piece}-card.png`);
         flash('download', 'Card saved');
@@ -81,7 +81,7 @@ export function useShare(piece: PieceId) {
     } finally {
       setBusy(null);
     }
-  }, [flash, piece]);
+  }, [flash, piece, playerName]);
 
   /** Invite flow: event details rather than a personal result. */
   const invite = useCallback(async () => {

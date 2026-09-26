@@ -1,14 +1,20 @@
 import { EVENT } from '../data/event';
 import { PIECES } from '../data/pieces';
+import { displayFirstName } from './playerName';
 import { buildShareUrl } from './url';
 import type { PieceId } from '../types';
 
-export function buildShareMessage(piece: PieceId): string {
+export function buildShareMessage(piece: PieceId, playerName = ''): string {
   const { name, glyph } = PIECES[piece];
+  const first = displayFirstName(playerName);
+  const result = first
+    ? `Apparently, ${first} is a ${name.toUpperCase()} ${glyph}`
+    : `Apparently, I'm a ${name.toUpperCase()} ${glyph}`;
+
   return [
     `I just discovered my chess piece through ${EVENT.name}.`,
     '',
-    `Apparently, I'm a ${name.toUpperCase()} ${glyph}`,
+    result,
     '',
     "What's your move?",
     '',
@@ -103,8 +109,11 @@ export async function copyText(value: string): Promise<boolean> {
   }
 }
 
-export function buildFullShareText(piece: PieceId): { text: string; url: string } {
-  return { text: buildShareMessage(piece), url: buildShareUrl(piece) };
+export function buildFullShareText(
+  piece: PieceId,
+  playerName = '',
+): { text: string; url: string } {
+  return { text: buildShareMessage(piece, playerName), url: buildShareUrl() };
 }
 
 /** Minimal .ics so "Get event details" works with no backend. */
