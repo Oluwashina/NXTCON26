@@ -35,7 +35,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
     <Screen wide pace="snap" center={false} className="justify-center py-10 sm:py-14">
       <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         {/* Board */}
-        <Reveal snappy animateExit={false} delay={0} y={8} className="order-2 lg:order-1">
+        <Reveal flow animateExit={false} delay={0.12} y={10} className="order-2 lg:order-1">
           <div className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
             <ChessBoard
               placements={PLACEMENTS}
@@ -56,21 +56,21 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
 
         {/* Copy */}
         <div className="order-1 lg:order-2">
-          <Reveal snappy delay={0}>
+          <Reveal flow animateExit={false} delay={0}>
             <span className="eyebrow">The board</span>
           </Reveal>
 
           <LineReveal
             lines={['Every piece', 'moves differently.']}
-            delay={0.04}
-            snappy
+            delay={0.08}
+            flow
             className="display ivory-text mt-5 text-[clamp(2rem,8.5vw,3.6rem)] font-medium"
             lineClassName="last:font-display last:italic"
           />
 
-          <Reveal snappy delay={0.1} className="mt-6 h-px w-full hairline sm:mt-8" />
+          <Reveal flow animateExit={false} delay={0.36} className="mt-6 h-px w-full hairline sm:mt-8" />
 
-          <Reveal snappy delay={0.08} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+          <Reveal flow animateExit={false} delay={0.44} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
             <Button variant="solid" size="lg" arrow onClick={onBegin} className="sm:w-auto">
               Begin the experience
             </Button>

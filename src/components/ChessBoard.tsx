@@ -71,7 +71,7 @@ export function ChessBoard({
         }
         transition={
           perspectiveSnap
-            ? { duration: 0.42, ease: [0.16, 1, 0.3, 1] }
+            ? { duration: 0.58, ease: [0.16, 1, 0.3, 1] }
             : perspective
               ? { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
               : undefined

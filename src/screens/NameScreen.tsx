@@ -33,24 +33,24 @@ export function NameScreen({ value, onChange, onContinue, onBack }: NameScreenPr
 
   return (
     <Screen pace="snap" className="py-16">
-      <Reveal snappy animateExit={false} delay={0}>
+      <Reveal flow animateExit={false} delay={0}>
         <span className="eyebrow">Before your first move</span>
       </Reveal>
 
       <LineReveal
         lines={['What should', 'we call you?']}
-        delay={0.04}
-        snappy
+        delay={0.08}
+        flow
         className="display ivory-text mt-6 text-[clamp(2.2rem,10vw,4.2rem)] font-medium"
       />
 
-      <Reveal snappy animateExit={false} delay={0.1} className="mt-8 max-w-md">
+      <Reveal flow animateExit={false} delay={0.32} className="mt-8 max-w-md">
         <p className="font-sans text-[0.86rem] font-light leading-relaxed text-ink-500">
-          Your name appears on your result and share card. It stays on this device only.
+          Your name appears on your result and share card.
         </p>
       </Reveal>
 
-      <Reveal snappy animateExit={false} delay={0.14} className="mt-10">
+      <Reveal flow animateExit={false} delay={0.48} className="mt-10">
         <div
           className="group relative border border-ink/12 bg-white/90 transition-colors duration-500 focus-within:border-gold/60 hover:border-ink/20 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.15)]"
           onClick={() => field.current?.focus()}
@@ -83,7 +83,7 @@ export function NameScreen({ value, onChange, onContinue, onBack }: NameScreenPr
         ) : null}
       </Reveal>
 
-      <Reveal snappy animateExit={false} delay={0.18} className="mt-11 flex items-center justify-between gap-4">
+      <Reveal flow animateExit={false} delay={0.62} className="mt-11 flex items-center justify-between gap-4">
         <Button variant="quiet" size="sm" onClick={onBack}>
           &larr; Back
         </Button>
