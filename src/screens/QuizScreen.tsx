@@ -115,10 +115,10 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
   });
 
   return (
-    <Screen className="py-14">
+    <Screen pace="snap" className="py-14">
       <QuizAtmosphere answers={answers} echo={echo} moveIndex={index} />
 
-      <Reveal delay={0.05} y={-10} className="relative z-10">
+      <Reveal snappy delay={0} y={-8} className="relative z-10">
         <QuizProgress
           current={index + 1}
           total={TOTAL_MOVES}
@@ -139,25 +139,27 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
         </AnimatePresence>
       </div>
 
-      <div className="relative z-10 mt-9 flex items-center justify-between gap-4 sm:mt-11">
-        <Button variant="quiet" size="sm" onClick={handleBack}>
-          &larr; {index === 0 ? 'The board' : 'Previous'}
-        </Button>
+      <Reveal snappy delay={0.12} className="relative z-10 mt-9 sm:mt-11">
+        <div className="flex items-center justify-between gap-4">
+          <Button variant="quiet" size="sm" onClick={handleBack}>
+            &larr; {index === 0 ? 'The board' : 'Previous'}
+          </Button>
 
-        <Button
-          variant={selected === null ? 'outline' : 'solid'}
-          size="md"
-          arrow
-          disabled={selected === null}
-          onClick={goForward}
-        >
-          {isLast ? 'Reveal my piece' : 'Next move'}
-        </Button>
-      </div>
+          <Button
+            variant={selected === null ? 'outline' : 'solid'}
+            size="md"
+            arrow
+            disabled={selected === null}
+            onClick={goForward}
+          >
+            {isLast ? 'Reveal my piece' : 'Next move'}
+          </Button>
+        </div>
+      </Reveal>
 
-      <p className="relative z-10 eyebrow mt-7 hidden text-ink/35 sm:block">
-        Tip — press A to F to make your move
-      </p>
+      <Reveal snappy delay={0.16} className="relative z-10 mt-7 hidden sm:block">
+        <p className="eyebrow text-ink/35">Tip — press A to F to make your move</p>
+      </Reveal>
     </Screen>
   );
 }

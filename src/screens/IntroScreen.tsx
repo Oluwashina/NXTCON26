@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { EVENT } from '../data/event';
 import { BrandMark, NxtconLockup } from '../components/ui/Brand';
@@ -13,43 +13,66 @@ interface IntroScreenProps {
 
 export function IntroScreen({ onBegin }: IntroScreenProps) {
   const [leaving, setLeaving] = useState(false);
+  const advanceTimer = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
 
   const begin = () => {
     setLeaving(true);
-    onBegin();
+    advanceTimer.current = window.setTimeout(onBegin, 80);
   };
 
   return (
-    <Screen className="h-screen max-h-screen overflow-hidden" center={false}>
+    <Screen pace="snap" className="h-screen max-h-screen overflow-hidden" center={false}>
       <div aria-hidden className="pointer-events-none fixed inset-0">
         <motion.img
           src="/brand/nxtcon26-poster.png"
           alt=""
           initial={{ scale: 1.06, opacity: 0 }}
-          animate={{ scale: 1.14, opacity: 1 }}
-          transition={{ duration: 22, ease: 'linear' }}
+          animate={{ scale: leaving ? 1.08 : 1.14, opacity: leaving ? 0 : 1 }}
+          transition={
+            leaving
+              ? { duration: 0.12, ease: [0.16, 1, 0.3, 1] }
+              : { duration: 22, ease: 'linear' }
+          }
           className="absolute inset-0 h-full w-full object-cover object-[center_30%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(244,241,235,0.72)_0%,rgba(244,241,235,0.35)_42%,rgba(244,241,235,0.55)_68%,#f4f1eb_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(72%_58%_at_50%_42%,transparent_22%,rgba(255,255,255,0.5)_78%,#f4f1eb_100%)]" />
+        <motion.div
+          aria-hidden
+          initial={{ opacity: 0 }}
+          animate={{ opacity: leaving ? 1 : 0 }}
+          transition={{ duration: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0 bg-[#f4f1eb]"
+        />
       </div>
 
-      <div className="relative z-10">
+      <motion.div
+        className="relative z-10"
+        animate={{ opacity: leaving ? 0 : 1 }}
+        transition={{ duration: 0.1, ease: [0.16, 1, 0.3, 1] }}
+      >
         <header className="flex items-start justify-between">
-          <Reveal delay={0.2} y={-8}>
+          <Reveal animateExit={false} delay={0.2} y={-8}>
             <BrandMark />
           </Reveal>
-          <Reveal delay={0.35} y={-8} className="text-right">
+          <Reveal animateExit={false} delay={0.35} y={-8} className="text-right">
             <span className="eyebrow block">An interactive experience</span>
           </Reveal>
         </header>
 
         <div className="flex flex-col items-center pb-40 pt-[12vh] text-center sm:pb-44 sm:pt-[14vh]">
-          <Reveal delay={0.5} duration={1.5}>
+          <Reveal animateExit={false} delay={0.5} duration={1.5}>
             <NxtconLockup className="text-[clamp(1.05rem,4.2vw,1.7rem)] tracking-[0.28em] text-ink-800" />
           </Reveal>
 
-          <Reveal delay={0.85} duration={1.2} className="mx-auto mt-5 h-px w-12 hairline-gold" />
+          <Reveal animateExit={false} delay={0.85} duration={1.2} className="mx-auto mt-5 h-px w-12 hairline-gold" />
 
           <LineReveal
             lines={['Everyone has a move.']}
@@ -75,13 +98,13 @@ export function IntroScreen({ onBegin }: IntroScreenProps) {
             className="display ivory-text mt-2 text-[clamp(2.3rem,11vw,4.6rem)] font-medium italic sm:hidden"
           />
 
-          <Reveal delay={1.85} duration={1.2} className="mx-auto mt-6 max-w-sm">
+          <Reveal animateExit={false} delay={1.85} duration={1.2} className="mx-auto mt-6 max-w-sm">
             <p className="text-balance font-sans text-[0.76rem] font-light leading-relaxed text-ink-600 sm:text-[0.88rem]">
               Discover the chess piece that reflects how you move, think and lead.
             </p>
           </Reveal>
         </div>
-      </div>
+      </motion.div>
 
       {!leaving
         ? createPortal(

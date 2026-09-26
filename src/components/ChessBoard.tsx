@@ -22,6 +22,8 @@ interface ChessBoardProps {
   showCoordinates?: boolean;
   /** Slight 3D rake, as if the board recedes into the room. */
   perspective?: boolean;
+  /** Shorter tilt-in when the board first appears on flow screens. */
+  perspectiveSnap?: boolean;
   className?: string;
   overlay?: ReactNode;
 }
@@ -37,10 +39,16 @@ export function ChessBoard({
   interactive = false,
   showCoordinates = false,
   perspective = false,
+  perspectiveSnap = false,
   className,
   overlay,
 }: ChessBoardProps) {
   const hintSet = new Set(hints);
+  const boardTilt = perspectiveSnap
+    ? { rotateX: 11, scale: 0.98 }
+    : perspective
+      ? { rotateX: 11, scale: 0.98 }
+      : undefined;
 
   return (
     <div
@@ -50,12 +58,28 @@ export function ChessBoard({
         className,
       )}
     >
-      <div
+      <motion.div
+        initial={
+          perspectiveSnap
+            ? { opacity: 0, rotateX: 16, scale: 0.94, y: 12 }
+            : false
+        }
+        animate={
+          boardTilt
+            ? { opacity: 1, rotateX: boardTilt.rotateX, scale: boardTilt.scale, y: 0 }
+            : { opacity: 1 }
+        }
+        transition={
+          perspectiveSnap
+            ? { duration: 0.42, ease: [0.16, 1, 0.3, 1] }
+            : perspective
+              ? { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
+              : undefined
+        }
+        style={{ transformPerspective: perspective ? 1400 : undefined }}
         className={cn(
           'relative h-full w-full overflow-hidden',
           'shadow-[0_40px_120px_-40px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.08)]',
-          perspective &&
-            'transition-transform duration-[1400ms] ease-cinema [transform:rotateX(11deg)_scale(0.98)]',
         )}
       >
         {/* Squares */}
@@ -161,7 +185,7 @@ export function ChessBoard({
         </div>
 
         {overlay}
-      </div>
+      </motion.div>
 
       {showCoordinates ? (
         <>

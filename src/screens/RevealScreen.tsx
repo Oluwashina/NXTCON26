@@ -48,7 +48,7 @@ export function RevealScreen({
           <div key="body">
             {/* Strength / Move */}
             <Reveal delay={beat(2.0)} className="mt-12 sm:mt-14">
-              <dl className="grid grid-cols-2 divide-x divide-ink/10 border-y border-ink/10">
+              <dl className="glass-panel grid grid-cols-2 divide-x divide-ink/12 overflow-hidden">
                 <Stat label="Strength" value={data.strength} />
                 <Stat label="Your move" value={data.move} accent />
               </dl>
@@ -120,12 +120,17 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="px-4 py-5 text-center sm:px-6 sm:py-6">
-      <dt className="eyebrow">{label}</dt>
+    <div
+      className={cn(
+        'px-4 py-5 text-center sm:px-6 sm:py-7',
+        accent && 'bg-gradient-to-b from-gold/[0.14] via-white/60 to-white/90',
+      )}
+    >
+      <dt className={cn('eyebrow', accent ? 'text-gold-deep/90' : undefined)}>{label}</dt>
       <dd
         className={cn(
-          'mt-2.5 font-display text-[1.05rem] uppercase leading-tight tracking-[0.1em] sm:text-[1.25rem]',
-          accent ? 'gold-text' : 'text-ink-800',
+          'mt-2.5 font-display text-[1.05rem] uppercase leading-tight tracking-[0.1em] sm:text-[1.3rem]',
+          accent ? 'font-semibold text-gold-deep' : 'text-ink-800',
         )}
       >
         {value}

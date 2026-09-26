@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChessBoard, type Placement } from '../components/ChessBoard';
 import { Button } from '../components/ui/Button';
-import { Reveal } from '../components/ui/Reveal';
+import { LineReveal, Reveal } from '../components/ui/Reveal';
 import { Screen } from '../components/ui/Screen';
 import { ALL_PIECES } from '../data/pieces';
 import { moveHints } from '../lib/board';
@@ -32,10 +32,10 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
   const hints = active ? moveHints(active, SQUARE_BY_PIECE[active]) : [];
 
   return (
-    <Screen wide center={false} className="justify-center py-10 sm:py-14">
+    <Screen wide pace="snap" center={false} className="justify-center py-10 sm:py-14">
       <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         {/* Board */}
-        <Reveal delay={0} duration={0.7} y={16} className="order-2 lg:order-1">
+        <Reveal snappy animateExit={false} delay={0} y={8} className="order-2 lg:order-1">
           <div className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
             <ChessBoard
               placements={PLACEMENTS}
@@ -45,6 +45,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
               onPieceSelect={(piece) => setActive((current) => (current === piece ? null : piece))}
               interactive
               perspective
+              perspectiveSnap
               showCoordinates
             />
             <p className="eyebrow mt-9 text-center text-ink/45 lg:mt-10">
@@ -55,22 +56,21 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
 
         {/* Copy */}
         <div className="order-1 lg:order-2">
-          <Reveal delay={0.02} duration={0.6}>
+          <Reveal snappy delay={0}>
             <span className="eyebrow">The board</span>
           </Reveal>
 
-          <Reveal delay={0.06} duration={0.7}>
-            <h2 className="display ivory-text mt-5 text-[clamp(2rem,8.5vw,3.6rem)] font-medium">
-              Every piece
-              <br />
-              moves
-              <span className="font-display italic"> differently.</span>
-            </h2>
-          </Reveal>
+          <LineReveal
+            lines={['Every piece', 'moves differently.']}
+            delay={0.04}
+            snappy
+            className="display ivory-text mt-5 text-[clamp(2rem,8.5vw,3.6rem)] font-medium"
+            lineClassName="last:font-display last:italic"
+          />
 
-          <Reveal delay={0.1} duration={0.6} className="mt-6 h-px w-full hairline sm:mt-8" />
+          <Reveal snappy delay={0.1} className="mt-6 h-px w-full hairline sm:mt-8" />
 
-          <Reveal delay={0.12} duration={0.6} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+          <Reveal snappy delay={0.08} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
             <Button variant="solid" size="lg" arrow onClick={onBegin} className="sm:w-auto">
               Begin the experience
             </Button>
@@ -80,10 +80,10 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
           </Reveal>
 
           <ul className="mt-6 space-y-0.5 sm:mt-8 sm:space-y-1">
-            {ALL_PIECES.map((piece, index) => {
+            {ALL_PIECES.map((piece) => {
               const isActive = active === piece.id;
               return (
-                <Reveal key={piece.id} delay={0.14 + index * 0.04} duration={0.55} y={8} as="li">
+                <li key={piece.id}>
                   <button
                     type="button"
                     onMouseEnter={() => setActive(piece.id)}
@@ -116,7 +116,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
                       <span className="text-ink-500"> {piece.movement}.</span>
                     </span>
                   </button>
-                </Reveal>
+                </li>
               );
             })}
           </ul>
