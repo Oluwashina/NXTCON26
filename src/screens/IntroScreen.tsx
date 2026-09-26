@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { EVENT } from '../data/event';
 import { BrandMark, NxtconLockup } from '../components/ui/Brand';
@@ -11,6 +12,13 @@ interface IntroScreenProps {
 }
 
 export function IntroScreen({ onBegin }: IntroScreenProps) {
+  const [leaving, setLeaving] = useState(false);
+
+  const begin = () => {
+    setLeaving(true);
+    onBegin();
+  };
+
   return (
     <Screen className="h-screen max-h-screen overflow-hidden" center={false}>
       <div aria-hidden className="pointer-events-none fixed inset-0">
@@ -75,17 +83,19 @@ export function IntroScreen({ onBegin }: IntroScreenProps) {
         </div>
       </div>
 
-      {createPortal(
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 bg-gradient-to-t from-black via-black/90 to-transparent pt-20">
-          <div className="pointer-events-auto mx-auto flex w-full max-w-3xl flex-col items-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-center sm:px-8">
-            <Button variant="solid" size="lg" arrow onClick={onBegin}>
-              Discover your piece
-            </Button>
-            <p className="eyebrow mt-3 text-ivory/35">{EVENT.brand}</p>
-          </div>
-        </div>,
-        document.body,
-      )}
+      {!leaving
+        ? createPortal(
+            <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 bg-gradient-to-t from-black via-black/90 to-transparent pt-20">
+              <div className="pointer-events-auto mx-auto flex w-full max-w-3xl flex-col items-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-center sm:px-8">
+                <Button variant="solid" size="lg" arrow onClick={begin}>
+                  Discover your piece
+                </Button>
+                <p className="eyebrow mt-3 text-ivory/35">{EVENT.brand}</p>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </Screen>
   );
 }

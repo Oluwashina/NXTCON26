@@ -82,7 +82,7 @@ export default function App() {
       <Backdrop variant={BACKDROP[stage]} />
 
       <main className="relative">
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           {stage === 'intro' ? (
             <IntroScreen key="intro" onBegin={() => setStage('board')} />
           ) : null}

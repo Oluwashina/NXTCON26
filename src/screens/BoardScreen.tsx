@@ -35,7 +35,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
     <Screen wide center={false} className="justify-center py-10 sm:py-14">
       <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         {/* Board */}
-        <Reveal delay={0.15} duration={1.3} y={24} className="order-2 lg:order-1">
+        <Reveal delay={0} duration={0.7} y={16} className="order-2 lg:order-1">
           <div className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
             <ChessBoard
               placements={PLACEMENTS}
@@ -55,11 +55,11 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
 
         {/* Copy */}
         <div className="order-1 lg:order-2">
-          <Reveal delay={0.1}>
+          <Reveal delay={0.02} duration={0.6}>
             <span className="eyebrow">The board</span>
           </Reveal>
 
-          <Reveal delay={0.25} duration={1.3}>
+          <Reveal delay={0.06} duration={0.7}>
             <h2 className="display ivory-text mt-5 text-[clamp(2rem,8.5vw,3.6rem)] font-medium">
               Every piece
               <br />
@@ -68,9 +68,9 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.45} className="mt-6 h-px w-full hairline sm:mt-8" />
+          <Reveal delay={0.1} duration={0.6} className="mt-6 h-px w-full hairline sm:mt-8" />
 
-          <Reveal delay={0.55} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+          <Reveal delay={0.12} duration={0.6} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
             <Button variant="solid" size="lg" arrow onClick={onBegin} className="sm:w-auto">
               Begin the experience
             </Button>
@@ -83,7 +83,7 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
             {ALL_PIECES.map((piece, index) => {
               const isActive = active === piece.id;
               return (
-                <Reveal key={piece.id} delay={0.55 + index * 0.08} y={12} as="li">
+                <Reveal key={piece.id} delay={0.14 + index * 0.04} duration={0.55} y={8} as="li">
                   <button
                     type="button"
                     onMouseEnter={() => setActive(piece.id)}

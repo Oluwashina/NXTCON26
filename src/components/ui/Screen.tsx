@@ -19,7 +19,7 @@ export function Screen({ children, className, center = true, wide = false }: Scr
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'relative flex min-h-[100svh] w-full flex-col px-5 sm:px-8',
         'safe-t safe-b',
