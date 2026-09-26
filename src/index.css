@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --board-light: #e6e1d5;
+    --board-dark: #111214;
+  }
+
+  html,
+  body {
+    @apply bg-ink text-ivory;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  /* The experience owns its own scroll containers; never bounce the shell. */
+  #root {
+    @apply min-h-[100svh];
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-ivory;
+  }
+
+  input,
+  textarea,
+  button {
+    font: inherit;
+  }
+
+  textarea {
+    field-sizing: content;
+  }
+}
+
+@layer components {
+  /* ---------- Typography primitives ---------- */
+  .display {
+    @apply font-display font-normal uppercase leading-[0.92];
+    letter-spacing: -0.015em;
+  }
+
+  .eyebrow {
+    @apply font-sans text-[0.62rem] font-medium uppercase tracking-mega text-ivory-400 xs:text-[0.7rem];
+  }
+
+  .rule-text {
+    @apply font-sans text-[0.68rem] font-light uppercase tracking-widest;
+  }
+
+  .gold-text {
+    background: linear-gradient(100deg, #94733a 0%, #e4c78c 38%, #fff3d0 52%, #c6a15b 72%, #8c6a30 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ivory-text {
+    background: linear-gradient(180deg, #ffffff 0%, #f2efe7 45%, #b4ae9f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ---------- Surfaces ---------- */
+  .glass-panel {
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012) 40%, rgba(0, 0, 0, 0.3));
+    @apply border border-ivory/10 backdrop-blur-xl;
+  }
+
+  .hairline {
+    @apply bg-gradient-to-r from-transparent via-ivory/20 to-transparent;
+  }
+
+  .hairline-gold {
+    @apply bg-gradient-to-r from-transparent via-gold/50 to-transparent;
+  }
+
+  /* Marble-ish veined charcoal, built from layered gradients (no bitmaps). */
+  .marble {
+    background-color: #08080a;
+    background-image:
+      radial-gradient(115% 80% at 12% -8%, rgba(198, 161, 91, 0.1), transparent 58%),
+      radial-gradient(90% 70% at 88% 4%, rgba(255, 255, 255, 0.07), transparent 60%),
+      linear-gradient(118deg, transparent 47.6%, rgba(255, 255, 255, 0.05) 48.2%, transparent 48.9%),
+      linear-gradient(132deg, transparent 63.4%, rgba(255, 255, 255, 0.035) 64%, transparent 64.8%),
+      linear-gradient(104deg, transparent 21.5%, rgba(198, 161, 91, 0.05) 22.1%, transparent 22.7%),
+      linear-gradient(196deg, #101114 0%, #07070a 55%, #000 100%);
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .vignette::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(130% 95% at 50% 32%, transparent 34%, rgba(0, 0, 0, 0.62) 82%, #000 100%);
+  }
+
+  /* Soft top-down key light, like the poster's hall lighting. */
+  .keylight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(58% 42% at 50% -6%, rgba(255, 245, 219, 0.14), transparent 70%),
+      conic-gradient(from 178deg at 50% -18%, transparent 44%, rgba(255, 246, 224, 0.07) 50%, transparent 56%);
+  }
+
+  /* ---------- Chessboard ---------- */
+  .board-square-light {
+    background-image:
+      linear-gradient(152deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 60%),
+      linear-gradient(200deg, #efebe0, #cdc7b7);
+  }
+
+  .board-square-dark {
+    background-image:
+      linear-gradient(152deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 55%),
+      linear-gradient(200deg, #16181b, #05050700);
+    background-color: #0c0d0f;
+  }
+
+  /* ---------- Focus ---------- */
+  .ring-focus {
+    @apply outline-none ring-offset-0 focus-visible:ring-1 focus-visible:ring-gold/70;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .safe-b {
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-t {
+    padding-top: max(1.25rem, env(safe-area-inset-top));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
