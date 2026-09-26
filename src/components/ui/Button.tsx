@@ -45,7 +45,7 @@ export function Button({
       {...rest}
       className={cn(
         'ring-focus group relative inline-flex items-center justify-center gap-3 overflow-hidden',
-        'font-sans font-medium uppercase',
+        'touch-manipulation font-sans font-medium uppercase',
         'transition-all duration-500 ease-cinema active:scale-[0.985]',
         'disabled:pointer-events-none disabled:opacity-40',
         VARIANTS[variant],

@@ -30,22 +30,24 @@ export function EventScreen({ piece, onRestart, onBack }: EventScreenProps) {
         className="display ivory-text mt-6 text-center text-[clamp(2.1rem,9.5vw,4.6rem)] font-medium"
       />
 
-      <Reveal delay={1.0} className="mx-auto mt-14 h-px w-full max-w-md hairline-gold" />
+      <Reveal delay={0.7} className="mx-auto mt-10 h-px w-full max-w-md hairline-gold sm:mt-14">
+        <span className="sr-only"> </span>
+      </Reveal>
 
       {/* Event block */}
-      <div className="mt-14 grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20">
+      <div className="mt-10 grid items-center gap-12 sm:mt-14 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-20">
         <div className="text-center lg:text-left">
-          <Reveal delay={1.15}>
+          <Reveal delay={0.8}>
             <NxtconLockup className="block text-[clamp(2.4rem,11vw,4.6rem)] tracking-[0.04em] text-ivory" />
           </Reveal>
 
-          <Reveal delay={1.3}>
+          <Reveal delay={0.95}>
             <p className="display mt-3 text-[clamp(1.2rem,5.4vw,2.1rem)] tracking-[0.12em] text-gold-light/90">
               {EVENT.themeDisplay}
             </p>
           </Reveal>
 
-          <Reveal delay={1.45} className="mt-9 space-y-6">
+          <Reveal delay={1.05} className="mt-9 space-y-6">
             <div>
               <p className="eyebrow text-ivory/30">When</p>
               <p className="mt-2 font-sans text-[0.92rem] font-light uppercase tracking-widest text-ivory">
@@ -64,7 +66,7 @@ export function EventScreen({ piece, onRestart, onBack }: EventScreenProps) {
             </div>
           </Reveal>
 
-          <Reveal delay={1.6} className="mt-10">
+          <Reveal delay={1.15} className="mt-10">
             <div className="h-px w-full hairline" />
             <div className="mt-6 space-y-1.5">
               {EVENT.invitation.map((line) => (
@@ -79,7 +81,7 @@ export function EventScreen({ piece, onRestart, onBack }: EventScreenProps) {
           </Reveal>
 
           {!countdown.elapsed ? (
-            <Reveal delay={1.75} className="mt-11">
+            <Reveal delay={1.25} className="mt-11">
               <p className="eyebrow text-ivory/30">Time until the first move</p>
               <div className="mt-4 flex justify-center gap-6 lg:justify-start sm:gap-9">
                 {[
@@ -103,7 +105,7 @@ export function EventScreen({ piece, onRestart, onBack }: EventScreenProps) {
         </div>
 
         {/* Poster */}
-        <Reveal delay={1.35} y={26} className="mx-auto w-full max-w-[20rem] lg:max-w-none">
+        <Reveal delay={0.9} y={26} className="mx-auto w-full max-w-[20rem] lg:max-w-none">
           <div className="relative border border-ivory/15 p-2.5 shadow-[0_50px_120px_-60px_rgba(0,0,0,1)]">
             <img
               src="/brand/nxtcon26-poster.png"
@@ -123,11 +125,11 @@ export function EventScreen({ piece, onRestart, onBack }: EventScreenProps) {
       </div>
 
       {/* Actions */}
-      <Reveal delay={1.9} className="mx-auto mt-16 w-full max-w-xl">
+      <Reveal delay={1.35} className="mx-auto mt-16 w-full max-w-xl">
         <EventCTA piece={piece} />
       </Reveal>
 
-      <Reveal delay={2.1} className="mt-16">
+      <Reveal delay={1.5} className="mt-16">
         <div className="h-px w-full hairline" />
         <footer className="mt-8 flex flex-col items-center justify-between gap-6 sm:flex-row">
           <BrandMark />

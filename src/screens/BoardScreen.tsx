@@ -32,8 +32,8 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
   const hints = active ? moveHints(active, SQUARE_BY_PIECE[active]) : [];
 
   return (
-    <Screen wide center={false} className="justify-center py-16">
-      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+    <Screen wide center={false} className="justify-center py-10 sm:py-14">
+      <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
         {/* Board */}
         <Reveal delay={0.15} duration={1.3} y={24} className="order-2 lg:order-1">
           <div className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
@@ -68,9 +68,18 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.45} className="mt-8 h-px w-full hairline" />
+          <Reveal delay={0.45} className="mt-6 h-px w-full hairline sm:mt-8" />
 
-          <ul className="mt-7 space-y-1">
+          <Reveal delay={0.55} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+            <Button variant="solid" size="lg" arrow onClick={onBegin} className="sm:w-auto">
+              Begin the experience
+            </Button>
+            <Button variant="quiet" size="sm" onClick={onBack}>
+              &larr; Back
+            </Button>
+          </Reveal>
+
+          <ul className="mt-6 space-y-0.5 sm:mt-8 sm:space-y-1">
             {ALL_PIECES.map((piece, index) => {
               const isActive = active === piece.id;
               return (
@@ -112,14 +121,6 @@ export function BoardScreen({ onBegin, onBack }: BoardScreenProps) {
             })}
           </ul>
 
-          <Reveal delay={1.15} className="mt-11 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Button variant="solid" size="lg" arrow onClick={onBegin} className="sm:w-auto">
-              Begin the experience
-            </Button>
-            <Button variant="quiet" size="sm" onClick={onBack}>
-              &larr; Back
-            </Button>
-          </Reveal>
         </div>
       </div>
     </Screen>

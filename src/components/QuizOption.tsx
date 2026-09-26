@@ -30,8 +30,8 @@ export function QuizOption({
         onClick={onSelect}
         aria-pressed={selected}
         className={cn(
-          'ring-focus group relative flex w-full items-start gap-4 overflow-hidden border px-4 py-4 text-left',
-          'transition-all duration-500 ease-cinema sm:gap-5 sm:px-6 sm:py-[1.15rem]',
+          'ring-focus group relative flex min-h-[3.25rem] w-full items-start gap-4 overflow-hidden border px-4 py-3.5 text-left',
+          'select-none touch-manipulation transition-all duration-500 ease-cinema sm:gap-5 sm:px-6 sm:py-[1.15rem]',
           selected
             ? 'border-gold/70 bg-gold/[0.09] shadow-[inset_0_0_40px_-18px_rgba(228,199,140,0.45)]'
             : 'border-ivory/12 bg-ivory/[0.02] hover:border-ivory/35 hover:bg-ivory/[0.055]',

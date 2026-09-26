@@ -15,10 +15,11 @@ interface ScreenProps {
 export function Screen({ children, className, center = true, wide = false }: ScreenProps) {
   return (
     <motion.section
-      initial={{ opacity: 0, filter: 'blur(14px)', scale: 1.015 }}
-      animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-      exit={{ opacity: 0, filter: 'blur(14px)', scale: 0.995 }}
-      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+      transformTemplate={() => 'none'}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         'relative flex min-h-[100svh] w-full flex-col px-5 sm:px-8',
         'safe-t safe-b',
@@ -26,7 +27,9 @@ export function Screen({ children, className, center = true, wide = false }: Scr
         className,
       )}
     >
-      <div className={cn('mx-auto w-full', wide ? 'max-w-6xl' : 'max-w-3xl')}>{children}</div>
+      <div className={cn('mx-auto flex h-full min-h-0 w-full flex-col', wide ? 'max-w-6xl' : 'max-w-3xl')}>
+        {children}
+      </div>
     </motion.section>
   );
 }

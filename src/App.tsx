@@ -15,7 +15,7 @@ import type { AnswerSheet, PieceId, ScoreResult } from './types';
 type Stage = 'intro' | 'board' | 'quiz' | 'reveal' | 'reflection' | 'event';
 
 const BACKDROP: Record<Stage, 'hall' | 'void' | 'chamber'> = {
-  intro: 'hall',
+  intro: 'void',
   board: 'chamber',
   quiz: 'void',
   reveal: 'chamber',
@@ -47,9 +47,11 @@ export default function App() {
     });
   }, []);
 
-  const handleQuizComplete = useCallback(() => {
-    if (!isComplete(answers)) return;
-    const result = scoreQuiz(answers);
+  const handleQuizComplete = useCallback((sheet?: AnswerSheet) => {
+    const finalSheet = sheet ?? answers;
+    if (!isComplete(finalSheet)) return;
+    const result = scoreQuiz(finalSheet);
+    setAnswers(finalSheet);
     setScore(result);
     setSharedPiece(null);
     syncPieceToUrl(result.winner);

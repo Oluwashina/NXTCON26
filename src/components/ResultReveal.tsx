@@ -115,6 +115,7 @@ export function ResultReveal({ piece, instant = false, onRevealed }: ResultRevea
               <p className="mt-4 font-editorial text-sm italic text-ivory/30">
                 Seven moves. Six pieces. One of them is you.
               </p>
+              <p className="eyebrow mt-6 text-ivory/25">Tap to reveal</p>
             </div>
           </motion.div>
         ) : (

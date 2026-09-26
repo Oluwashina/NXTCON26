@@ -1,17 +1,18 @@
 import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { QuizAtmosphere } from '../components/QuizAtmosphere';
 import { QuizProgress } from '../components/QuizProgress';
 import { QuizQuestion } from '../components/QuizQuestion';
 import { Button } from '../components/ui/Button';
 import { Reveal } from '../components/ui/Reveal';
 import { Screen } from '../components/ui/Screen';
 import { QUESTIONS, TOTAL_MOVES } from '../data/questions';
-import type { AnswerSheet } from '../types';
+import type { AnswerSheet, PieceId } from '../types';
 
 interface QuizScreenProps {
   answers: AnswerSheet;
   onAnswer: (questionIndex: number, optionIndex: number) => void;
-  onComplete: () => void;
+  onComplete: (sheet?: AnswerSheet) => void;
   onExit: () => void;
 }
 
@@ -24,6 +25,7 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
     return firstUnanswered === -1 ? 0 : firstUnanswered;
   });
   const [direction, setDirection] = useState(1);
+  const [echo, setEcho] = useState<PieceId | null>(null);
   const advanceTimer = useRef<number | null>(null);
 
   const question = QUESTIONS[index];
@@ -57,9 +59,21 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
   }, [goTo, index, isLast, onComplete]);
 
   const handleSelect = (optionIndex: number) => {
+    const chosen = question.options[optionIndex]?.piece ?? null;
+    setEcho(chosen);
     onAnswer(index, optionIndex);
+
+    const nextSheet: AnswerSheet = [...answers];
+    nextSheet[index] = optionIndex;
+
     clearTimer();
-    advanceTimer.current = window.setTimeout(goForward, ADVANCE_DELAY);
+    advanceTimer.current = window.setTimeout(() => {
+      if (isLast) {
+        onComplete(nextSheet);
+        return;
+      }
+      goTo(index + 1);
+    }, ADVANCE_DELAY);
   };
 
   const handleBack = () => {
@@ -102,7 +116,9 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
 
   return (
     <Screen className="py-14">
-      <Reveal delay={0.05} y={-10}>
+      <QuizAtmosphere answers={answers} echo={echo} moveIndex={index} />
+
+      <Reveal delay={0.05} y={-10} className="relative z-10">
         <QuizProgress
           current={index + 1}
           total={TOTAL_MOVES}
@@ -111,7 +127,7 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
         />
       </Reveal>
 
-      <div className="mt-10 sm:mt-14">
+      <div className="relative z-10 mt-10 sm:mt-14">
         <AnimatePresence mode="wait" initial={false}>
           <QuizQuestion
             key={question.id}
@@ -123,7 +139,7 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
         </AnimatePresence>
       </div>
 
-      <div className="mt-9 flex items-center justify-between gap-4 sm:mt-11">
+      <div className="relative z-10 mt-9 flex items-center justify-between gap-4 sm:mt-11">
         <Button variant="quiet" size="sm" onClick={handleBack}>
           &larr; {index === 0 ? 'The board' : 'Previous'}
         </Button>
@@ -139,7 +155,7 @@ export function QuizScreen({ answers, onAnswer, onComplete, onExit }: QuizScreen
         </Button>
       </div>
 
-      <p className="eyebrow mt-7 hidden text-ivory/20 sm:block">
+      <p className="relative z-10 eyebrow mt-7 hidden text-ivory/20 sm:block">
         Tip — press A to F to make your move
       </p>
     </Screen>

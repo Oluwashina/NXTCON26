@@ -30,6 +30,7 @@ export function RevealScreen({
 }: RevealScreenProps) {
   const [revealed, setRevealed] = useState(instant);
   const data = PIECES[piece];
+  const beat = (late: number) => (instant ? Math.min(0.35, late * 0.12) : late);
 
   return (
     <Screen center={false} className="justify-center py-14">
@@ -39,7 +40,7 @@ export function RevealScreen({
         {revealed ? (
           <div key="body">
             {/* Strength / Move */}
-            <Reveal delay={2.0} className="mt-12 sm:mt-14">
+            <Reveal delay={beat(2.0)} className="mt-12 sm:mt-14">
               <dl className="grid grid-cols-2 divide-x divide-ivory/10 border-y border-ivory/10">
                 <Stat label="Strength" value={data.strength} />
                 <Stat label="Your move" value={data.move} accent />
@@ -47,7 +48,7 @@ export function RevealScreen({
             </Reveal>
 
             {/* Description */}
-            <Reveal delay={2.25} className="mx-auto mt-11 max-w-xl space-y-5 text-center">
+            <Reveal delay={beat(2.25)} className="mx-auto mt-11 max-w-xl space-y-5 text-center">
               {data.description.map((paragraph, index) => (
                 <p
                   key={index}
@@ -66,13 +67,13 @@ export function RevealScreen({
             </Reveal>
 
             {score ? (
-              <Reveal delay={2.5} className="mt-14">
+              <Reveal delay={beat(2.5)} className="mt-14">
                 <BoardReadout score={score} />
               </Reveal>
             ) : null}
 
             {/* Share card */}
-            <Reveal delay={2.65} className="mt-16">
+            <Reveal delay={beat(2.65)} className="mt-16">
               <div className="text-center">
                 <span className="eyebrow">Your card</span>
                 <div className="mx-auto mt-6 h-px w-10 hairline" />
@@ -86,7 +87,7 @@ export function RevealScreen({
             </Reveal>
 
             {/* Onward */}
-            <Reveal delay={2.85} className="mt-16 flex flex-col items-center gap-5">
+            <Reveal delay={beat(2.85)} className="mt-16 flex flex-col items-center gap-5">
               <div className="h-px w-full hairline" />
               <Button variant="solid" size="lg" arrow onClick={onContinue}>
                 Every piece has a purpose
