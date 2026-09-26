@@ -1,32 +1,52 @@
-# React + TypeScript + Vite
+# What's Your Move? · NXTCON26
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An interactive personality experience for **NXTCON26** — *Knight and Bishop* — by The New Church.
 
-Currently, two official plugins are available:
+This is not a typical event landing page. It is a short cinematic quiz that asks: **what's your move?** Visitors discover the chess piece that reflects how they move, think and lead, then get invited to the conference.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Event:** 1 October 2026 · 9:00 AM WAT  
+**Venue:** 60, Surulere Industrial Road, Opposite NNPC Filling Station, Off Adeniyi Jones, Ikeja
 
-## React Compiler
+## The idea
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Every person has a different role, perspective and way of moving. The experience uses six chess pieces as a language for that:
 
-## Expanding the Oxlint configuration
+| Piece | Archetype | Strength | The move |
+| --- | --- | --- | --- |
+| Pawn | The Builder | Consistency | Start |
+| Knight | The Unconventional | Perspective | Think differently |
+| Bishop | The Visionary | Vision | See beyond |
+| Rook | The Foundation | Stability | Stand firm |
+| Queen | The Influencer | Range | Create impact |
+| King | The Leader | Purpose | Lead with purpose |
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## How it plays
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+1. **Intro** — A dark, hall-like opening. Event details stay hidden on purpose.
+2. **The board** — An interactive chessboard. Each piece moves differently.
+3. **Seven moves** — One scenario at a time. Same questions, same order, every time.
+4. **Reveal** — A short “calculating your move” beat, then the piece.
+5. **Reflection** — “What move have you been postponing?” Typed locally. Never saved.
+6. **Invitation** — NXTCON26 details, countdown, and ways to invite or share.
+
+Results can be shared on WhatsApp or Instagram, copied as text, or saved as a card. A link like `?piece=knight` opens that result directly — nothing is stored on a server.
+
+## How scoring works
+
+All questions and answers live in `src/data/questions.ts`. Each answer awards one point to one piece. The highest score wins. Ties are broken deterministically (last move, then earliest commitment, then a fixed piece order) so the same answers always produce the same piece.
+
+## Run it
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Then open the local URL Vite prints (usually `http://localhost:5173`).
+
+```bash
+npm run build    # production build
+npm run preview  # serve the built files
+```
+
+Fully client-side. React, TypeScript, Tailwind CSS. No backend, no database, no accounts.
